@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/LightGBM.py" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Pearson_Correlation_Coefficient.py" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/RF.py" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SVM.py" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Stacking.py" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Stacking1.py" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/XGBoost.py" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/correlationAnalysis.py" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/featureSelection.py" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/knn.py" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/preprocessing.py" charset="UTF-16" />
+    <file url="file://$PROJECT_DIR$/rf_feature_importances.py" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/sCARS_SPA _ICO.py" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/test.py" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/testRF.py" charset="UTF-8" />
+  </component>
+</project>
