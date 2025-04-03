@@ -19,14 +19,14 @@ plt.title("Feature Correlation Matrix")
 plt.show()
 
 # 4. 筛选相关性较高的特征（如果需要）
-threshold = 0.9  # 设置相关性阈值
+threshold = 0.8  # 设置相关性阈值
 high_corr_var = np.where(corr_matrix > threshold)
 
 # 找到相关性大于阈值的特征对（去除对称部分，避免重复）
 high_corr_var = [(X.columns[x], X.columns[y]) for x, y in zip(*high_corr_var) if x != y and x < y]
 
 # 输出高度相关的特征对
-print("Highly correlated feature pairs (correlation > 0.9):")
+print("Highly correlated feature pairs (correlation > 0.8):")
 print(high_corr_var)
 
 # 如果需要根据相关性删除特征，你可以在此处进行操作，例如删除高相关的特征

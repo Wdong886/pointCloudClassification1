@@ -11,6 +11,7 @@ from sklearn.preprocessing import LabelEncoder, label_binarize
 import seaborn as sns
 from sklearn.metrics import (accuracy_score, classification_report, confusion_matrix,
                              roc_curve, auc, precision_recall_curve)
+from sklearn.metrics import accuracy_score, f1_score, matthews_corrcoef
 
 # 1. 读取数据
 data = pd.read_csv('sampleData/sample.txt', delim_whitespace=True, header=None)  # 替换为你的txt文件路径
@@ -24,7 +25,7 @@ label_encoder = LabelEncoder()
 y = label_encoder.fit_transform(y)  # 将标签从1-6转换为0-5
 
 # 分割训练集和测试集
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
 # 3. 定义基模型
 model_rf = RandomForestClassifier(n_estimators=5, random_state=42)
@@ -56,16 +57,77 @@ final_predictions = meta_model.predict(stacked_features)
 
 # 7. 评估模型
 accuracy = accuracy_score(y_test, final_predictions)
-print(f'最终预测的准确率: {accuracy * 100:.2f}%')
+f1 = f1_score(y_test, final_predictions, average='macro')
+mcc = matthews_corrcoef(y_test, final_predictions)
+
+print("\n模型评估结果:")
+print(f"准确率: {accuracy * 100:.2f}%")
+print(f"F1分数(宏平均): {f1:.4f}")
+print(f"马修斯相关系数(MCC): {mcc:.4f}")
+
+
 
 # 混淆矩阵
 cm = confusion_matrix(y_test, final_predictions)
+# plt.figure(figsize=(8, 6))
+# sns.heatmap(cm, annot=True, fmt="d", cmap="Blues", xticklabels=np.unique(y), yticklabels=np.unique(y))
+# plt.xlabel("Predicting label")
+# plt.ylabel("True label")
+# plt.title("Confusion Matrix")
+# plt.show()
+
+
+# # 混淆矩阵标签
+# class_labels = ["Building", "Electric", "Tree", "Low vegetation", "Car", "Other"]
+# # 绘制混淆矩阵
+# plt.figure(figsize=(8, 6))
+# sns.heatmap(cm, annot=True, fmt="d", cmap="Blues", xticklabels=class_labels, yticklabels=class_labels,
+#             annot_kws={"size": 18})  # 调整数字大小 & 颜色条字体大小
+# # 调整字体样式和大小
+# plt.xlabel("Predicted label", fontsize=22, fontname="Times New Roman")
+# plt.ylabel("True label", fontsize=22, fontname="Times New Roman")
+# plt.xticks(rotation=30, fontsize=20, fontname="Times New Roman")
+# plt.yticks(rotation=30, fontsize=20, fontname="Times New Roman")
+# plt.title("Confusion Matrix", fontsize=24, fontname="Times New Roman")
+# plt.show()
+
+# 混淆矩阵标签
+class_labels = ["Building", "Electric", "Tree", "Low vegetation", "Car", "Other"]
+
+# 绘制混淆矩阵
 plt.figure(figsize=(8, 6))
-sns.heatmap(cm, annot=True, fmt="d", cmap="Blues", xticklabels=np.unique(y), yticklabels=np.unique(y))
-plt.xlabel("Predicting label")
-plt.ylabel("True label")
-plt.title("Confusion Matrix")
+ax = sns.heatmap(cm, annot=True, fmt="d", cmap="Blues", xticklabels=class_labels, yticklabels=class_labels,
+                 annot_kws={"size": 18}, cbar_kws={"shrink": 0.8})  # 调整颜色条大小
+
+# 获取颜色条并调整刻度值字体大小
+cbar = ax.collections[0].colorbar
+cbar.ax.tick_params(labelsize=20)  # 设置颜色条刻度值的字体大小
+
+# 调整字体样式和大小
+plt.xlabel("Predicted label", fontsize=24, fontname="Times New Roman")
+plt.ylabel("True label", fontsize=24, fontname="Times New Roman")
+plt.xticks(rotation=30, fontsize=20, fontname="Times New Roman")
+plt.yticks(rotation=30, fontsize=20, fontname="Times New Roman")
+plt.title("Confusion Matrix", fontsize=26, fontname="Times New Roman")
+
 plt.show()
+
+
+
+import joblib
+
+# 保存基模型
+joblib.dump(model_rf, 'result/stacking/stracking_model_rf.pkl')
+joblib.dump(model_svm, 'result/stacking/stracking_model_svm.pkl')
+joblib.dump(model_xgb, 'result/stacking/stracking_model_xgb.pkl')
+joblib.dump(model_knn, 'result/stacking/stracking_model_knn.pkl')
+
+# 保存元模型
+joblib.dump(meta_model, 'result/stacking/stracking_meta_model.pkl')
+
+print("所有模型已成功保存！")
+
+
 
 # ROC 曲线和 AUC（适用于多分类）
 # 若为多分类，将标签二值化以适配 ROC 曲线

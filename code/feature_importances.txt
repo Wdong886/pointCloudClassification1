@@ -1,0 +1,14 @@
+Feature Importance Ranking:
+Rank 1: $\bar{h}$ - Importance: 0.242640
+Rank 2: $G_r$ - Importance: 0.147874
+Rank 3: $\sigma_h$ - Importance: 0.106430
+Rank 4: B - Importance: 0.091461
+Rank 5: $sk_h$ - Importance: 0.072956
+Rank 6: H - Importance: 0.062125
+Rank 7: V - Importance: 0.056512
+Rank 8: S - Importance: 0.044722
+Rank 9: G - Importance: 0.044121
+Rank 10: Planarity - Importance: 0.039931
+Rank 11: Scatter - Importance: 0.036760
+Rank 12: R - Importance: 0.035925
+Rank 13: Linearity - Importance: 0.018545
